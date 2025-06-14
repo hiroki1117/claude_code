@@ -10,7 +10,7 @@ class IRenderer(ABC):
     """Interface for rendering components."""
     
     @abstractmethod
-    def initialize(self) -> None:
+    def initialize_renderer(self) -> None:
         """Initialize the renderer."""
         pass
     
@@ -74,7 +74,7 @@ class IInputHandler(ABC):
     """Interface for input handling components."""
     
     @abstractmethod
-    def initialize(self) -> None:
+    def initialize_handler(self) -> None:
         """Initialize the input handler."""
         pass
     
@@ -118,7 +118,7 @@ class IGameBoard(ABC):
     """Interface for game board components."""
     
     @abstractmethod
-    def initialize(self, width: int, height: int) -> None:
+    def initialize_board(self, width: int, height: int) -> None:
         """Initialize the board with given dimensions."""
         pass
     
@@ -191,7 +191,7 @@ class IGameEngine(ABC):
     """Interface for game engine components."""
     
     @abstractmethod
-    def initialize(self) -> None:
+    def initialize_engine(self) -> None:
         """Initialize the game engine."""
         pass
     
@@ -313,7 +313,7 @@ class IAudioManager(ABC):
     """Interface for audio management."""
     
     @abstractmethod
-    def initialize(self) -> None:
+    def initialize_audio(self) -> None:
         """Initialize audio system."""
         pass
     

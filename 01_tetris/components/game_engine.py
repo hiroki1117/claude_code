@@ -99,7 +99,7 @@ class TetrisGameEngine(IGameEngine, Injectable, EventHandler):
         self._initialized = True
         self.logger.info("TetrisGameEngine initialized")
     
-    def initialize(self) -> None:
+    def initialize_engine(self) -> None:
         """Initialize the game engine."""
         if not self._initialized:
             raise RuntimeError("Game engine must be initialized with dependency container")

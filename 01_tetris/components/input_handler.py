@@ -34,7 +34,7 @@ class CursesInputHandler(IInputHandler, Injectable):
         
         self.logger.info("CursesInputHandler initialized")
     
-    def initialize(self) -> None:
+    def initialize_handler(self) -> None:
         """Initialize the input handler."""
         if not self._initialized:
             self._setup_input()

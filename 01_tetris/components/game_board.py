@@ -32,11 +32,11 @@ class GameBoard(IGameBoard, Injectable):
         self.height = game_config.board_height
         
         # Initialize board
-        self.initialize(self.width, self.height)
+        self.initialize_board(self.width, self.height)
         
         self.logger.info(f"GameBoard initialized with size {self.width}x{self.height}")
     
-    def initialize(self, width: int, height: int) -> None:
+    def initialize_board(self, width: int, height: int) -> None:
         """Initialize the board with given dimensions."""
         if width <= 0 or height <= 0:
             self.error_handler.handle_validation_error(

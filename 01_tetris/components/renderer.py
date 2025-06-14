@@ -37,8 +37,8 @@ class CursesRenderer(IRenderer, Injectable, EventHandler):
         
         self.logger.info("CursesRenderer initialized")
     
-    def initialize(self) -> None:
-        """Initialize the renderer."""
+    def initialize_renderer(self) -> None:
+        """Initialize the renderer without dependencies."""
         if not self._initialized:
             self._setup_curses()
             self._initialized = True
