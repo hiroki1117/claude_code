@@ -40,21 +40,25 @@ class GameApplication:
             config_manager = ConfigManager()
             self.container.register_instance(ConfigManager, config_manager)
             
-            # Register core components
-            self.container.register_singleton(IScoreCalculator, ScoreCalculator)
-            self.container.register_singleton(ITetrominoFactory, TetrominoFactory)
-            self.container.register_singleton(IGameBoard, GameBoard)
-            
-            # Register UI components with stdscr
+            # Register and initialize UI components first
             renderer = CursesRenderer(self.stdscr)
             input_handler = CursesInputHandler(self.stdscr)
+            
+            # Manually initialize them with just the config manager
+            renderer.initialize(self.container)
+            input_handler.initialize(self.container)
+            
+            # Register the initialized instances
             self.container.register_instance(IRenderer, renderer)
             self.container.register_instance(IInputHandler, input_handler)
             
-            # Register game engine
+            # Now register core components as singletons
+            self.container.register_singleton(IScoreCalculator, ScoreCalculator)
+            self.container.register_singleton(ITetrominoFactory, TetrominoFactory)
+            self.container.register_singleton(IGameBoard, GameBoard)
             self.container.register_singleton(IGameEngine, TetrisGameEngine)
             
-            # Initialize container
+            # Initialize container (for remaining singletons)
             self.container.initialize()
             
             self.logger.info("Dependency injection container initialized")

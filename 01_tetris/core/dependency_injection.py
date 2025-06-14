@@ -55,10 +55,7 @@ class Container:
     
     def get(self, interface: Type[T]) -> T:
         """Get an instance of the requested interface."""
-        if not self._initialized:
-            self.initialize()
-        
-        # Check for pre-registered instances
+        # Check for pre-registered instances first
         if interface in self._singletons:
             return self._singletons[interface]
         

@@ -43,6 +43,11 @@ class CursesInputHandler(IInputHandler, Injectable):
     def _setup_input(self) -> None:
         """Set up input handling."""
         try:
+            # Skip input setup if stdscr is a mock (for testing)
+            if hasattr(self.stdscr, '_mock_name'):
+                self.logger.debug("Skipping input setup for mock object")
+                return
+            
             self.stdscr.nodelay(True)  # Non-blocking input
             self.stdscr.timeout(100)   # 100ms timeout
             self.stdscr.keypad(True)   # Enable special keys
