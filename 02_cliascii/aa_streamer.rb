@@ -36,6 +36,9 @@ class AsciiArtStreamer
     
     current_entry = {}
     state = :title
+    art_lines = []
+    expected_height = 1
+    lines_collected = 0
     
     File.foreach(@database_file) do |line|
       line = line.chomp
@@ -47,23 +50,41 @@ class AsciiArtStreamer
           state = :dimensions
         end
       when :dimensions
-        if line.match(/^\d+x\d+$/)
+        if line.match(/^(\d+)x(\d+)$/)
           current_entry[:dimensions] = line
+          expected_height = $2.to_i
           state = :category
         end
       when :category
         if !line.empty?
           current_entry[:category] = line
           state = :art
+          art_lines = []
+          lines_collected = 0
         end
       when :art
         if !line.empty?
-          current_entry[:art] = line
-          @art_entries << current_entry.dup
-          current_entry.clear
-          state = :title
+          art_lines << line
+          lines_collected += 1
+          
+          # 期待される高さに達したらエントリを完成
+          if lines_collected >= expected_height
+            current_entry[:art] = art_lines.join("\n")
+            @art_entries << current_entry.dup
+            current_entry.clear
+            art_lines = []
+            state = :title
+            expected_height = 1
+            lines_collected = 0
+          end
         end
       end
+    end
+    
+    # 最後のエントリを処理
+    if !art_lines.empty? && !current_entry.empty?
+      current_entry[:art] = art_lines.join("\n")
+      @art_entries << current_entry.dup
     end
     
     puts "Loaded #{@art_entries.length} ASCII art entries"
