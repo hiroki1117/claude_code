@@ -75,28 +75,34 @@ class AsciiArtStreamer
 
   def display_art(entry)
     clear_screen
-    puts "=" * 50
+    puts "=" * 60
+    puts "📺 ASCII Art Streamer"
+    puts "=" * 60
     puts "Title: #{entry[:title]}"
     puts "Size: #{entry[:dimensions]}"
-    puts "=" * 50
+    puts "Category: #{entry[:category]}"
+    puts "-" * 60
     puts
     puts entry[:art]
     puts
-    puts "Press Ctrl+C to stop"
+    puts "-" * 60
+    puts "⏱️  Interval: #{@interval}s | 🎲 Random mode | Press Ctrl+C to stop"
   end
 
   def stream
     if @art_entries.empty?
-      puts "No ASCII art entries found!"
+      puts "❌ No ASCII art entries found!"
       return
     end
 
-    puts "Starting ASCII art stream (#{@interval}s intervals)..."
-    puts "Press Ctrl+C to stop"
+    puts "🚀 Starting ASCII art stream (#{@interval}s intervals)..."
+    puts "📦 Total entries available: #{@art_entries.length}"
+    puts "⏳ Press Ctrl+C to stop"
     sleep 2
 
     trap('INT') do
-      puts "\n\nStopping ASCII art stream. Goodbye!"
+      clear_screen
+      puts "👋 Stopping ASCII art stream. Goodbye!"
       exit 0
     end
 
